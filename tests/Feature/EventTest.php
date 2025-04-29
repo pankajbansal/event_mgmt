@@ -12,16 +12,25 @@ class EventTest extends TestCase
 
     public function test_can_create_event()
     {
+        $today = date('Y-m-d');
+        $startDate = date('Y-m-d', strtotime($today. ' + 1 days'));
+        $endDate = date('Y-m-d', strtotime($today. ' + 5 days'));
         $response = $this->postJson('/api/events', [
-            'name' => 'Sample Event',
+            'name' => 'Sample Event 11',
             'country' => 'USA',
             'capacity' => 100,
-            'start_time' => now()->addHours(1),
-            'end_time' => now()->addHours(2),
+            'start_time' => $startDate,
+            'end_time' => $endDate,
         ]);
 
         $response->assertStatus(201);
-        $response->assertJson(['name' => 'Sample Event']);
+        // $response->assertJson(['name' => 'Sample Event']);
+        $response->assertJson([
+            'data' => [
+                'name' => 'Sample Event 11',
+            ]
+        ]);
+        
     }
 
     public function test_can_list_events()
