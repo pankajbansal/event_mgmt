@@ -11,11 +11,14 @@ A RESTful API for managing events, attendees, and bookings.
 5. Start the server: `php artisan serve`.
 
 ## API Endpoints
-
+- You can import Event_Booking_API_Collection.postman_collection.json file in postman for API signatures
 - Events CRUD
 - Attendee Registration
 - Event Booking
 
+## Authentication & Authorization
+- Please refer the PDF Authentication&Authorization.pdf
+  
 ## Testing
 
 ```bash
