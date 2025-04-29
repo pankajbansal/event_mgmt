@@ -1,0 +1,168 @@
+{
+    "info": {
+        "name": "Event Booking API",
+        "_postman_id": "event-api-collection",
+        "description": "API collection for managing events, attendees, and bookings",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "List Events",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://event.localhost.com/api/events",
+                    "host": [
+                        "event.localhost.com"
+                    ],
+                    "path": [
+                        "api",
+                        "events"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Create Event",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"name\": \"Sample Event\",\n    \"description\": \"A demo event\",\n    \"country\": \"India\",\n    \"capacity\": 100,\n    \"start_time\": \"2025-06-01\",\n    \"end_time\": \"2025-06-03\"\n}"
+                },
+                "url": {
+                    "raw": "http://event.localhost.com/api/events",
+                    "host": [
+                        "event.localhost.com"
+                    ],
+                    "path": [
+                        "api",
+                        "events"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Get Single Event",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://event.localhost.com/api/events/1",
+                    "host": [
+                        "event.localhost.com"
+                    ],
+                    "path": [
+                        "api",
+                        "events",
+                        "1"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Update Event",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"name\": \"Updated Event\",\n    \"country\": \"USA\"\n}"
+                },
+                "url": {
+                    "raw": "http://event.localhost.com/api/events/1",
+                    "host": [
+                        "event.localhost.com"
+                    ],
+                    "path": [
+                        "api",
+                        "events",
+                        "1"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Delete Event",
+            "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                    "raw": "http://event.localhost.com/api/events/1",
+                    "host": [
+                        "event.localhost.com"
+                    ],
+                    "path": [
+                        "api",
+                        "events",
+                        "1"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Register Attendee",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"john@example.com\"\n}"
+                },
+                "url": {
+                    "raw": "http://event.localhost.com/api/attendees",
+                    "host": [
+                        "event.localhost.com"
+                    ],
+                    "path": [
+                        "api",
+                        "attendees"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Book Event",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"attendee_id\": 1,\n    \"event_id\": 1\n}"
+                },
+                "url": {
+                    "raw": "http://event.localhost.com/api/bookings",
+                    "host": [
+                        "event.localhost.com"
+                    ],
+                    "path": [
+                        "api",
+                        "bookings"
+                    ]
+                }
+            }
+        }
+    ]
+}
