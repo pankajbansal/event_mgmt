@@ -2,28 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Attendee;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreAttendeeRequest;
+use App\Services\AttendeeService;
 
 class AttendeeController extends Controller
 {
-    public function store(Request $request)
+    protected $attendeeService;
+
+    public function __construct(AttendeeService $attendeeService)
     {
-        
-        // $attendeeDetails = Attendee::where('email', $request->input('email'))->first();
+        $this->attendeeService = $attendeeService;
+    }
 
-        // if($attendeeDetails){
-        //     return response()->json(['message' => 'Email is already registered.'], 422); 
-        // }
+    public function store(StoreAttendeeRequest $request)
+    {
+        $attendee = $this->attendeeService->registerAttendee($request->validated());
 
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:attendees,email',
-        ]);
-
-
-        $attendee = Attendee::create($validated);
-
-        return response()->json($attendee, 201);
+        return response()->json([
+            'message' => 'Attendee registered successfully',
+            'data' => $attendee,
+        ], 201);
     }
 }
+

@@ -2,60 +2,71 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Event;
+use App\Services\EventService;
+use App\Http\Requests\EventRequest;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
-    public function index()
+    protected $eventService;
+
+    public function __construct(EventService $eventService)
     {
-        return response()->json(Event::paginate(10));
+        $this->eventService = $eventService;
     }
 
-    public function store(Request $request)
+    public function index(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'country' => 'required|string|max:100',
-            'capacity' => 'required|integer|min:1',
-            'start_time' => 'required|date',
-            'end_time' => 'required|date|after_or_equal:start_time',
-        ]);
+        $perPage = $request->query('per_page', 10);
+        $events = $this->eventService->getAllEvents($perPage);
 
-        $event = Event::create($validated);
+        return response()->json($events);
+    }
+
+    public function store(EventRequest $request)
+    {
+        $event = $this->eventService->createEvent($request->validated());
 
         return response()->json([
-            'message' => 'Event created successfully',
+            'message' => 'Event created successfully.',
             'data' => $event
         ], 201);
     }
 
-    public function show(Event $event)
+    public function show($id)
     {
+        $event = $this->eventService->getEventById($id);
+
+        if (!$event) {
+            return response()->json(['message' => 'Event not found.'], 404);
+        }
+
         return response()->json($event);
     }
 
-    public function update(Request $request, Event $event)
+    public function update(EventRequest $request, $id)
     {
-        $validated = $request->validate([
-            'name' => 'sometimes|required|string|max:255',
-            'description' => 'nullable|string',
-            'country' => 'sometimes|required|string|max:100',
-            'capacity' => 'sometimes|required|integer|min:1',
-            'start_time' => 'sometimes|required|date',
-            'end_time' => 'sometimes|required|date|after_or_equal:start_time',
+        $event = $this->eventService->updateEvent($id, $request->validated());
+
+        if (!$event) {
+            return response()->json(['message' => 'Event not found.'], 404);
+        }
+
+        return response()->json([
+            'message' => 'Event updated successfully.',
+            'data' => $event
         ]);
-
-        $event->update($validated);
-
-        return response()->json($event);
     }
 
-    public function destroy(Event $event)
+    public function destroy($id)
     {
-        $event->delete();
+        $deleted = $this->eventService->deleteEvent($id);
 
-        return response()->json(null, 204);
+        if (!$deleted) {
+            return response()->json(['message' => 'Event not found.'], 404);
+        }
+
+        return response()->json(['message' => 'Event deleted successfully.']);
     }
 }
+
