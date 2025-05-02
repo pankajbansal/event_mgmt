@@ -10,11 +10,11 @@ class AttendeeController extends Controller
     public function store(Request $request)
     {
         
-        $attendeeDetails = Attendee::where('email', $request->input('email'))->first();
+        // $attendeeDetails = Attendee::where('email', $request->input('email'))->first();
 
-        if($attendeeDetails){
-            return response()->json(['message' => 'Email is already registered.'], 400); 
-        }
+        // if($attendeeDetails){
+        //     return response()->json(['message' => 'Email is already registered.'], 422); 
+        // }
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',

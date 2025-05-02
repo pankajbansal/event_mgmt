@@ -31,7 +31,7 @@ class BookingController extends Controller
         $event = Event::findOrFail($validated['event_id']);
 
         if ($event->bookings()->count() >= $event->capacity) {
-            return response()->json(['message' => 'Event is fully booked.'], 400);
+            return response()->json(['message' => 'Event is fully booked.'], 422);
         }
 
         $exists = Booking::where('event_id', $validated['event_id'])
@@ -39,7 +39,7 @@ class BookingController extends Controller
                          ->exists();
 
         if ($exists) {
-            return response()->json(['message' => 'Attendee already booked this event.'], 400);
+            return response()->json(['message' => 'Attendee already booked this event.'], 422);
         }
 
         $booking = Booking::create($validated);

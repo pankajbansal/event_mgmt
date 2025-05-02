@@ -2,24 +2,23 @@
 
 namespace Database\Factories;
 
-use App\Models\Event;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
+use App\Models\Event;
 
 class EventFactory extends Factory
 {
     protected $model = Event::class;
 
-    public function definition(): array
+    public function definition()
     {
-        $start = $this->faker->dateTimeBetween('+1 days', '+10 days');
-        $end = $this->faker->dateTimeBetween($start, '+5 days');
+        $start = $this->faker->dateTimeBetween('+1 day', '+2 days');
+        $end = $this->faker->dateTimeBetween($start->format('Y-m-d H:i:s'), '+5 days');
 
         return [
-            'name' => $this->faker->sentence(3),
+            'name' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
             'country' => $this->faker->country,
-            'capacity' => $this->faker->numberBetween(10, 500),
+            'capacity' => $this->faker->numberBetween(1, 100),
             'start_time' => $start,
             'end_time' => $end,
         ];
