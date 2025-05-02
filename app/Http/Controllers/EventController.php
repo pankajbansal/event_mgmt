@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\EventService;
-use App\Http\Requests\EventRequest;
+use App\Http\Requests\StoreEventRequest;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -23,7 +23,7 @@ class EventController extends Controller
         return response()->json($events);
     }
 
-    public function store(EventRequest $request)
+    public function store(StoreEventRequest $request)
     {
         $event = $this->eventService->createEvent($request->validated());
 
@@ -44,7 +44,7 @@ class EventController extends Controller
         return response()->json($event);
     }
 
-    public function update(EventRequest $request, $id)
+    public function update(StoreEventRequest $request, $id)
     {
         $event = $this->eventService->updateEvent($id, $request->validated());
 
